@@ -5,7 +5,7 @@ The UI is not pixel perfect as some assets are not given in the figma design fil
 Functionalities : 
 - Login page has sign up with google button, by clicking on it user will be redirected to the dashboard page of my frontend.
 - Dashboard page has a header, sidenav and main layout.
-- Then if the get request to the reachinbox api email is successful, then it would should me the fetched emails. Otherwise failed to fetch emails.
+- Then if the get request to the reachinbox api email is successful, then it would show me the fetched emails in the UI. Otherwise failed to fetch emails.
 - If you click on any specific email then a get request will be sent to the get route of the particular email threadId and you will see the complete email thread in the UI.
 - There is a delete button also that will delete the respective email.
 - If user would click on R button is the keyboard then the reply custom editor would open and by clicking on send reply button a reply would be sent to the respective email.
