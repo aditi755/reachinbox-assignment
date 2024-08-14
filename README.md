@@ -2,7 +2,8 @@ The assignment is about implementing the login and dashboard page UI and data fe
 
 The UI is not pixel perfect as some assets are not given in the figma design file. But, I tried to make it look decent by implementing decent layout and UI. 
 
-Deployed Link : https://reachinbox-assignment-lihc.vercel.app/
+Deployed project link: https://reachinbox-assignment-lihc.vercel.app/
+
 Functionalities : 
 - Login page has sign up with google button, by clicking on it user will be redirected to the dashboard page of my frontend.
 - Dashboard page has a header, sidenav and main layout.
