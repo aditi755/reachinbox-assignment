@@ -11,3 +11,22 @@ Functionalities :
 - If user would click on R button is the keyboard then the reply custom editor would open and by clicking on send reply button a reply would be sent to the respective email.
 -  Light and dark mode toggle (need some color fixes).
 
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Getting Started
+
+First, fork the repo and then clone it in your machine using command 
+```
+git clone <Project_URL>
+```
+Then, in root folder run the command 
+```
+npm i 
+```
+to install all the dependencies and run the development server:
+
+```bash
+next  dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
