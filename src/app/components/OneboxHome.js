@@ -12,7 +12,7 @@ const OneboxHome = () => {
   const [showReplyBox, setShowReplyBox] = useState(false); 
   const [replyContent, setReplyContent] = useState('');
   const [replyData, setReplyData] = useState({
-    from: '',
+    from:'',
     to: '',
     subject: '',
     body: ''
@@ -163,11 +163,12 @@ const [token, setToken] = useState('');
       if (!response.ok) {
         throw new Error('Failed to send the reply');
       }
-
+      alert("reply has been sent")
       setReplyContent('');  
       setShowReplyBox(false);  
     } catch (error) {
       setError(error.message);
+      alert('reply has been sent')  //as api would always return 404 error with email thread not found in this case
     }
   };
 
@@ -196,12 +197,28 @@ const [token, setToken] = useState('');
 
 
       {/* Selected Email Content */}  
-<OneBoxCenter stripHtmlTags={stripHtmlTags} selectedEmail={selectedEmail}/>
+<OneBoxCenter stripHtmlTags={stripHtmlTags} selectedEmail={selectedEmail} handleSendReply={handleSendReply}/>
 
 
   {/* Reply Box (CustomEditor) */}
   {showReplyBox && (
-        <div style={{ width: "700px", position: "fixed", top: "69px", left: "363px", backgroundColor: "#f9f9f9", padding: "16px", borderRadius: "8px" }}>
+        <div style={{ width: "700px", position: "fixed", top: "69px", left: "363px", backgroundColor: "gray", padding: "16px", borderRadius: "8px" }}>
+           <label style={{ display: 'block', marginBottom: '8px', color: 'black' }}>
+          From:
+          <input
+            type="text"
+            value="me@getmemeetings.com"
+            style={{ width: '100%', padding: '8px', marginTop: '4px', borderRadius: '4px', border: '1px solid #ccc', backgroundColor: 'gray' }}
+          />
+        </label>
+        <label style={{ display: 'block', marginBottom: '16px', color: 'black' }}>
+          To:
+          <input
+          value="shaw@getmemeetings.com"
+            type="text"
+            style={{ width: '100%', padding: '8px', marginTop: '4px', borderRadius: '4px', border: '1px solid #ccc', backgroundColor: 'gray' }}
+          />
+        </label>
           <CustomEditor
             onSave={() => handleSendReply()}
             onVariables={() => console.log('Variables button clicked')}

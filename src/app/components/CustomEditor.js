@@ -26,7 +26,7 @@ const CustomEditor = ({ onSave, onVariables }) => {
   }, [onSave, onVariables]);
 
   return (
-    <div id="editor-container" style={{ height: '400px',color:"black" }}></div>
+    <div id="editor-container" style={{ height: '200px',color:"black", backgroundColor:"gray"}}></div>
   );
 };
 
