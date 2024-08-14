@@ -1,36 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+The assignment is about implementing the login and dashboard page UI and data fetching with the help of reachinbox api endpoints.
 
-## Getting Started
+The UI is not pixel perfect as some assets are not given in the figma design file. But, I tried to make it look decent by implementing decent layout and UI. 
 
-First, run the development server:
+Functionalities : 
+- Login page has sign up with google button, by clicking on it user will be redirected to the dashboard page of my frontend.
+- Dashboard page has a header, sidenav and main layout.
+- Then if the get request to the reachinbox api email is successful, then it would should me the fetched emails. Otherwise failed to fetch emails.
+- If you click on any specific email then a get request will be sent to the get route of the particular email threadId and you will see the complete email thread in the UI.
+- There is a delete button also that will delete the respective email.
+- If user would click on R button is the keyboard then the reply custom editor would open and by clicking on send reply button a reply would be sent to the respective email.
+-  Light and dark mode toggle (need some color fixes).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
