@@ -25,7 +25,7 @@ const Login = () => {
 
    <div className=" custom-paragraph mt-5 " onClick={handleGoogleLogin}>
    <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="Google Logo" className="google-image" />
-     <p className="sign-up">Sign up with Google</p>
+     <p className="sign-up cursor-pointer">Sign up with Google</p>
    </div>
     </div>
  

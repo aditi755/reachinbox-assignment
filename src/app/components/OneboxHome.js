@@ -1,89 +1,3 @@
-
-//'use client'
-// import React, { useEffect, useState } from 'react';
-
-// const OneboxHome = () => {
-//   const [emails, setEmails] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchEmails = async () => {
-//       try {
-//         const response = await fetch('https://hiring.reachinbox.xyz/api/v1/onebox/list', {
-//           headers: {
-//             'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYmhhZG9yaXlhYWRpdGkwNDNAZ21haWwuY29tIiwiaWQiOjc4MCwiZmlyc3ROYW1lIjoiQWRpdGkiLCJsYXN0TmFtZSI6IkJoYWRvcml5YSJ9LCJpYXQiOjE3MjM1NzQ1ODcsImV4cCI6MTc1NTExMDU4N30.eHdZr1zwudV9TFDNbH1B7nqmy7mo7A7qcBMphEg1LPo', // Replace YOUR_TOKEN_HERE with the actual token
-//           },
-//         });
-
-//         if (!response.ok) {
-//           throw new Error('Failed to fetch emails');
-//         }
-
-//         const result = await response.json();
-//         setEmails(result.data);
-//         setLoading(false);
-//       } catch (error) {
-//         setError(error.message);
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchEmails();
-//   }, []);
-
-//   const stripHtmlTags = (html) => {
-//     const tempDiv = document.createElement('div');
-//     tempDiv.innerHTML = html;
-//     return tempDiv.textContent || tempDiv.innerText || '';
-//   };
-
-
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (error) {
-//     return <div>Error: {error}</div>;
-//   }
-
-//   return (
-//     <div>
-//       {emails.length === 0 ? (
-//         <div className='w-[1383px] h-[693px] fixed top-[67px] left-[57px] flex flex-col justify-center items-center'>
-//           <p className="font-bold text-1xl"> It’s the beginning of a legendary sales pipeline </p>
-//           <p className="mt-8">When you have inbound E-mails you’ll see them here</p>
-//           <p>You’ll see them here</p>
-//         </div>
-//       ) : (
-//         <div className="flex">
-//           <div style={{width: "278px", height: "821px", position: "fixed", top:"67px", left:"71px", border: "0px 1px 0px 1px", gap: "8px", backgroundColor:"red", height:"100vh"}}>
-//             {/* You can map through emails to display them here */}
-//             {emails.map((email) => (
-//               <div key={email.id}>
-//                 <p>{email.subject}</p>
-//                 <p>{email.fromName}</p>
-//                 <p>{stripHtmlTags(email.body)}</p>
-//               </div>
-//             ))}
-//           </div>
-
-//           <div style={{width:"700px", position:"fixed", top:"69px", left:"363px"}}>
-//             <div style={{width:"700px", height:"70px"}}>Header</div>
-//             <div style={{width:"752px", height:"534px", position:"fixed", top:"201px", left:"384px", gap:"32px"}}>Main</div>
-//           </div>
-
-//           <div style={{width: "278px", height: "821px", position: "fixed", top:"67px", left:"1260px", border: "0px 1px 0px 1px", gap: "8px", backgroundColor:"red", height:"100vh"}}>
-//             Side
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default OneboxHome;
-
 'use client'
 import React, { useEffect, useState } from 'react';
 import CustomEditor from './CustomEditor';
@@ -240,11 +154,30 @@ const OneboxHome = () => {
 
   
   return (
+
+
+    // try div loadibg
+  <div>
+
+{emails.length === 0 ? (
+         <div className='w-[1383px] h-[693px] fixed top-[67px] left-[57px] flex flex-col justify-center items-center'>           
+         <p className="font-bold text-1xl"> It’s the beginning of a legendary sales pipeline </p>
+           <p className="mt-8">When you have inbound E-mails you’ll see them here</p>
+          <p>You’ll see them here</p>
+        </div>
+       ) : (
     <div className="flex">
       {/* List of Emails */}
-      <div style={{width: "278px", height: "821px", position: "fixed", top:"67px", left:"71px", border: "0px 1px 0px 1px",  border: `1px solid #33383F`, // Set the border color
-    // padding: '0 10px 0 0', 
-    borderRadius: '4px', gap: "8px", height:"100vh"}}>
+      <div style={{
+  width: "278px", 
+  height: "100vh", 
+  position: "fixed", 
+  top: "67px", 
+  left: "71px", 
+  borderRight: "2px solid #33383F", 
+  borderRadius: "4px", 
+  gap: "8px", border: "0px 1px 0px 0px"
+}}>
 
      <p className='w-[160px] h-[47px] text-blue-400 text-2xl font-bold'>All Inbox</p>
 
@@ -253,7 +186,7 @@ const OneboxHome = () => {
 {emails.map((email) => (
   <div 
     key={email.id} 
-    className="w-[255px] h-[100px]shadow-md p-4 rounded-lg mb-4 cursor-pointer hover:bg-gray-100 border border-gray-800 pr-2 mt-6 ml-3" 
+    className="w-[276px] h-[130px] shadow-md p-4 mb-4 cursor-pointer hover:bg-gray-100 border-b-2 border-gray-500 pr-2 mt-6 py-3 px-2" 
     onClick={() => handleEmailClick(email.threadId)}
   >
     {/* <h3 className="font-semibold text-lg mb-1 text-gray-500">{email.subject}</h3> */}
@@ -278,22 +211,22 @@ const OneboxHome = () => {
 
 <div style={{ width: "700px", position: "fixed", top: "69px", left: "363px" }}>
   <div   style={{
-    width: "799px",
+    width: "900px",
     height: "70px",
     position: "fixed",
     top: "69px",
-    left: "363px",
-    // borderRadius: "7px 7px 0px 0px",
+    left: "353px",
     border: "0px 0px 1px 0px",
     padding: "0px 8px 0px 17px",
     display: "flex",
     justifyContent: "space-between",
-    gap: "8px"
+    gap: "8px", 
+    borderBottom: "2px solid #33383F",  
   }}>
     <div>  <p>Orlando</p>
     <p>orlando@email.com</p>
      </div>
-    <div style={{width:"180px", height:"33px", borderRadius:"0px", border:"1px", padding:"6px 8px 6px 8px", gap:"6px", backgroundColor:"#1F1F1F", textAlign:"center"}}>Meeting completed</div>
+    <div style={{width:"180px", height:"33px" , border:"1px solid #33383F", padding:"6px 8px 6px 8px", gap:"6px", backgroundColor:"#1F1F1F", textAlign:"center"}}>Meeting completed</div>
   </div>
   <div style={{ width: "752px", height: "534px", position: "fixed", top: "201px", left: "384px", gap: "32px" }}>
     {selectedEmail && selectedEmail.length > 0 ? (
@@ -333,9 +266,22 @@ const OneboxHome = () => {
         </div>
       )}
 
-          <div style={{width: "278px", height: "821px", position: "fixed", top:"67px", left:"1260px", border: "0px 1px 0px 1px", gap: "8px", backgroundColor:"red", height:"100vh"}}>
+          <div style={{
+  width: "278px", 
+  height: "100vh", 
+  position: "fixed", 
+  top: "68px", 
+  left: "1252px", 
+  borderLeft: "2px solid #33383F", 
+  borderRadius: "4px", 
+  gap: "8px", border: "0px 1px 0px 0px"}}>
            Side
            </div>
+
+</div>)}
+
+
+
 
 </div>
 
