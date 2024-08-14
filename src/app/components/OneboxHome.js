@@ -30,25 +30,37 @@ const [token, setToken] = useState('');
     }
   }, []);
 
-
-
-  // Fetch emails once the token is set
   useEffect(() => {
-    let isMounted = true; // To avoid setting state if the component is unmounted
+    let isMounted = true;
 
     const fetchEmails = async () => {
       try {
-        const response = await fetch('https://hiring.reachinbox.xyz/api/v1/onebox/list', {
+        // First, call the reset endpoint
+        const resetResponse = await fetch('https://hiring.reachinbox.xyz/api/v1/onebox/reset', {
+          method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
           },
         });
 
-        if (!response.ok) {
+        if (!resetResponse.ok) {
+          throw new Error('Failed to reset onebox');
+        }
+
+        console.log('Onebox reset successful');
+
+        // After resetting, call the list endpoint
+        const listResponse = await fetch('https://hiring.reachinbox.xyz/api/v1/onebox/list', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!listResponse.ok) {
           throw new Error('Failed to fetch emails');
         }
 
-        const result = await response.json();
+        const result = await listResponse.json();
 
         if (isMounted) {
           setEmails(result.data);
@@ -69,7 +81,7 @@ const [token, setToken] = useState('');
     return () => {
       isMounted = false; // Cleanup function to avoid state update after unmount
     };
-  }, [token]); // Depend on the token, so fetchEmails runs after the token is set
+  }, [token]);
 
 
   const stripHtmlTags = (html) => {
