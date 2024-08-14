@@ -1,5 +1,0 @@
-reply button and only thread id se reply bhi hona chahiye iuss respectove email pe 400 status code 
-and ui adjust and editor is left
-comp breakdwown 
-
-tailined theme color customize for grey
