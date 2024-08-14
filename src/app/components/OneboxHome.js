@@ -23,7 +23,7 @@ const [token, setToken] = useState('');
     const fetchedToken = localStorage.getItem('authToken');
     if (fetchedToken) {
       setToken(fetchedToken);
-      console.log(fetchedToken)
+      
     } else { 
       setError('No auth token found');
       setLoading(false); 
@@ -150,8 +150,7 @@ const [token, setToken] = useState('');
     };
   }, [selectedEmail]);
 
-  console.log('selectedemail', selectedEmail)
-  console.log("selctedreply", replyContent, showReplyBox)
+
   
 
   const handleSendReply = async () => {
