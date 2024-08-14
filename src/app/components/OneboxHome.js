@@ -1,12 +1,15 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import CustomEditor from './CustomEditor';
+import OneboxLeftSide from './ui/OneboxLeftSide';
+import OneBoxCenter from './ui/OneBoxCenter';
+import OneboxRightSide from './ui/OneboxRightSide';
 const OneboxHome = () => {
   const [emails, setEmails] = useState([]);
   const [selectedEmail, setSelectedEmail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showReplyBox, setShowReplyBox] = useState(false); //make ot truw to see reply box
+  const [showReplyBox, setShowReplyBox] = useState(false); 
   const [replyContent, setReplyContent] = useState('');
   const [replyData, setReplyData] = useState({
     from: '',
@@ -14,15 +17,30 @@ const OneboxHome = () => {
     subject: '',
     body: ''
   });
- const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYmhhZG9yaXlhYWRpdGkwNDNAZ21haWwuY29tIiwiaWQiOjc4MCwiZmlyc3ROYW1lIjoiQWRpdGkiLCJsYXN0TmFtZSI6IkJoYWRvcml5YSJ9LCJpYXQiOjE3MjM1NzQ1ODcsImV4cCI6MTc1NTExMDU4N30.eHdZr1zwudV9TFDNbH1B7nqmy7mo7A7qcBMphEg1LPo'
-
+const [token, setToken] = useState('');
 
   useEffect(() => {
+    const fetchedToken = localStorage.getItem('authToken');
+    if (fetchedToken) {
+      setToken(fetchedToken);
+      console.log(fetchedToken)
+    } else { 
+      setError('No auth token found');
+      setLoading(false); 
+    }
+  }, []);
+
+
+
+  // Fetch emails once the token is set
+  useEffect(() => {
+    let isMounted = true; // To avoid setting state if the component is unmounted
+
     const fetchEmails = async () => {
       try {
         const response = await fetch('https://hiring.reachinbox.xyz/api/v1/onebox/list', {
           headers: {
-            'Authorization': `Bearer ${token}`, // Replace with your token
+            'Authorization': `Bearer ${token}`,
           },
         });
 
@@ -31,16 +49,28 @@ const OneboxHome = () => {
         }
 
         const result = await response.json();
-        setEmails(result.data);
-        setLoading(false);
+
+        if (isMounted) {
+          setEmails(result.data);
+          setLoading(false);
+        }
       } catch (error) {
-        setError(error.message);
-        setLoading(false);
+        if (isMounted) {
+          setError(error.message);
+          setLoading(false);
+        }
       }
     };
 
-    fetchEmails();
-  }, []);
+    if (token && isMounted) {
+      fetchEmails();
+    }
+
+    return () => {
+      isMounted = false; // Cleanup function to avoid state update after unmount
+    };
+  }, [token]); // Depend on the token, so fetchEmails runs after the token is set
+
 
   const stripHtmlTags = (html) => {
     const tempDiv = document.createElement('div');
@@ -97,8 +127,6 @@ const OneboxHome = () => {
           handleDeleteEmail(selectedEmail.threadId);
         }
       } else if (event.key === 'r') {
-        // Open reply box
-        // Set state to show the reply component or modal
         setShowReplyBox(true);
       }
     };
@@ -136,8 +164,8 @@ const OneboxHome = () => {
         throw new Error('Failed to send the reply');
       }
 
-      setReplyContent('');  // Clear the reply content
-      setShowReplyBox(false);  // Close the reply box
+      setReplyContent('');  
+      setShowReplyBox(false);  
     } catch (error) {
       setError(error.message);
     }
@@ -154,11 +182,7 @@ const OneboxHome = () => {
 
   
   return (
-
-
-    // try div loadibg
   <div>
-
 {emails.length === 0 ? (
          <div className='w-[1383px] h-[693px] fixed top-[67px] left-[57px] flex flex-col justify-center items-center'>           
          <p className="font-bold text-1xl"> It’s the beginning of a legendary sales pipeline </p>
@@ -168,85 +192,11 @@ const OneboxHome = () => {
        ) : (
     <div className="flex">
       {/* List of Emails */}
-      <div style={{
-  width: "278px", 
-  height: "100vh", 
-  position: "fixed", 
-  top: "67px", 
-  left: "71px", 
-  borderRight: "2px solid #33383F", 
-  borderRadius: "4px", 
-  gap: "8px", border: "0px 1px 0px 0px"
-}}>
-
-     <p className='w-[160px] h-[47px] text-blue-400 text-2xl font-bold'>All Inbox</p>
-
-     <input className="w-[275px] h-[44px] bg-gray-500"/>
-
-{emails.map((email) => (
-  <div 
-    key={email.id} 
-    className="w-[276px] h-[130px] shadow-md p-4 mb-4 cursor-pointer hover:bg-gray-100 border-b-2 border-gray-500 pr-2 mt-6 py-3 px-2" 
-    onClick={() => handleEmailClick(email.threadId)}
-  >
-    {/* <h3 className="font-semibold text-lg mb-1 text-gray-500">{email.subject}</h3> */}
-    <p className="text-sm text-gray-700 mb-1">{email.fromName}</p>
-    <p className="text-sm text-gray-600 mb-2 flex-nowrap">{stripHtmlTags(email.body).slice(0, 100)}...</p>
-    <button 
-      className="text-xs text-red-500 hover:text-red-700"
-      onClick={(e) => {
-        e.stopPropagation();  // Prevents the click from triggering the handleEmailClick
-        handleDeleteEmail(email.threadId);
-      }}
-    >
-      Delete
-    </button>
-  </div>
-))}
-
-        </div>
+        <OneboxLeftSide emails={emails} handleDeleteEmail={handleDeleteEmail} handleEmailClick={handleEmailClick} stripHtmlTags={stripHtmlTags}/>
 
 
       {/* Selected Email Content */}  
-
-<div style={{ width: "700px", position: "fixed", top: "69px", left: "363px" }}>
-  <div   style={{
-    width: "900px",
-    height: "70px",
-    position: "fixed",
-    top: "69px",
-    left: "353px",
-    border: "0px 0px 1px 0px",
-    padding: "0px 8px 0px 17px",
-    display: "flex",
-    justifyContent: "space-between",
-    gap: "8px", 
-    borderBottom: "2px solid #33383F",  
-  }}>
-    <div>  <p>Orlando</p>
-    <p>orlando@email.com</p>
-     </div>
-    <div style={{width:"180px", height:"33px" , border:"1px solid #33383F", padding:"6px 8px 6px 8px", gap:"6px", backgroundColor:"#1F1F1F", textAlign:"center"}}>Meeting completed</div>
-  </div>
-  <div style={{ width: "752px", height: "534px", position: "fixed", top: "201px", left: "384px", gap: "32px" }}>
-    {selectedEmail && selectedEmail.length > 0 ? (
-      selectedEmail.map((email, index) => (
-        <div
-          key={index}
-          className="w-[753px] h-[236px] bg-gray-600 p-4  mb-4"
-        >
-          <h2>{email.subject}</h2>
-          <p>From: {email.fromEmail}</p>
-          <p>To: {email.toEmail}</p>
-          <div>{stripHtmlTags(email.body)}</div>
-          
-        </div>
-      ))
-    ) : (
-      <div>Select an email to view its content</div>
-    )}
-  </div>
-</div>
+<OneBoxCenter stripHtmlTags={stripHtmlTags} selectedEmail={selectedEmail}/>
 
 
   {/* Reply Box (CustomEditor) */}
@@ -260,29 +210,13 @@ const OneboxHome = () => {
             onClick={handleSendReply}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
           >
-            Send Reply 
-          
+            Send Reply          
           </button>
         </div>
       )}
 
-          <div style={{
-  width: "278px", 
-  height: "100vh", 
-  position: "fixed", 
-  top: "68px", 
-  left: "1252px", 
-  borderLeft: "2px solid #33383F", 
-  borderRadius: "4px", 
-  gap: "8px", border: "0px 1px 0px 0px"}}>
-           Side
-           </div>
-
+        <OneboxRightSide />
 </div>)}
-
-
-
-
 </div>
 
   );
